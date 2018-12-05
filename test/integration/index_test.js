@@ -92,7 +92,7 @@ describe('KoaOAuthServer', function() {
     it('should return a `location` header with the error', function *() {
       var model = {
         getAccessToken: function() {
-          return { user: {} };
+          return { accessTokenExpiresAt: new Date(Date.now() + 1000), user: {} };
         },
         getClient: function() {
           return { grants: ['authorization_code'], redirectUris: ['http://example.com'] };
@@ -116,7 +116,7 @@ describe('KoaOAuthServer', function() {
     it('should return a `location` header with the code', function *() {
       var model = {
         getAccessToken: function() {
-          return { user: {} };
+          return { accessTokenExpiresAt: new Date(Date.now() + 1000), user: {} };
         },
         getClient: function() {
           return { grants: ['authorization_code'], redirectUris: ['http://example.com'] };
@@ -183,7 +183,7 @@ describe('KoaOAuthServer', function() {
       yield request(app.listen())
         .post('/')
         .send('client_id=foo&client_secret=bar&grant_type=password&username=qux&password=biz')
-        .expect({ access_token: 'foobar', token_type: 'bearer' })
+        .expect({ access_token: 'foobar', token_type: 'Bearer' })
         .end();
     });
 
@@ -206,7 +206,7 @@ describe('KoaOAuthServer', function() {
       yield request(app.listen())
         .post('/')
         .send('client_id=foo&client_secret=bar&grant_type=password&username=qux&password=biz')
-        .expect({ access_token: 'foobar', refresh_token: 'foobiz', token_type: 'bearer' })
+        .expect({ access_token: 'foobar', refresh_token: 'foobiz', token_type: 'Bearer' })
         .end();
     });
 
