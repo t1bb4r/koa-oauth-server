@@ -6,7 +6,7 @@
 var KoaOAuthServer = require('../../');
 var Request = require('oauth2-server').Request;
 var Response = require('oauth2-server').Response;
-var koa = require('koa');
+var Koa = require('koa');
 var request = require('co-supertest');
 var sinon = require('sinon');
 
@@ -18,7 +18,7 @@ describe('KoaOAuthServer', function() {
   var app;
 
   beforeEach(function() {
-    app = koa();
+    app = new Koa();
   });
 
   describe('authenticate()', function() {
